@@ -70,6 +70,21 @@ def powMethod(value, numeral):
         result = integers + floats
     else:
         intergerValues = reverseString(str(value))
-        result = powNumbers(intergerValues, 0, numeral, 1)
+        result = powNumbers(intergerValues, 0, len(intergerValues), numeral, 1)
     
     return result
+
+baseInicial = int(input("Digite a base inicial que será convertida: "))
+baseFinal = int(input("Digite a base final para conversão: "))
+number = input("\nDigite o número que deseja converter: ")
+
+if(baseInicial != 10):
+    decimalValue = powMethod(number, baseInicial)
+    if(baseFinal == 10):
+        print("\nValor na base " + str(baseFinal) + ": " + str(decimalValue), sep="")
+    else:
+        convertedValue = divideMethod(decimalValue, baseFinal)
+        print("\nValor na base " + str(baseFinal) + ": " + convertedValue, sep="")
+else:
+    convertedValue = divideMethod(number, baseFinal)
+    print("\nValor na base " + str(baseFinal) + ": " + convertedValue, sep="")
