@@ -7,9 +7,11 @@ correspondences = {
     15: "F"
 }
 
+# função para inverter string
 def reverseString(string):
     return string[::-1]
 
+# função para concatenar array de inteiros em uma string
 def concatenateArrayIntsInString(values):
     result = ""
     for i in range(len(values)):
@@ -19,58 +21,70 @@ def concatenateArrayIntsInString(values):
             result += str(values[i])
     return result
 
+# conversor de decimal para demais bases
 def convertFromDecimal(value, numeral):
-    # array de resultado das operações
     rests = []
-    if (int(value) < 1):
-        rests.append(0)
+    # separando valores inteiros e float
+    if("." in str(value)):
+        # adicionando 0 caso seja apenas números de ponto flutuante
+        if (float(value) < 1):
+            rests.append(0)
+        values = str(value).split(".")
+        integerValue = int(values[0])
+        # arredondando de acordo com o tamanho parseado
+        floatValue = round(int(values[1])*pow(10, -(len(values[1]))), (len(values[1])))
+    else:
+        integerValue = int(value)
 
-    integerValue = int(value)
-    floatValue = int(value) - int(value)
 
-    # realizando operações e invertendo para ordem correta
+    # realizando operações de inteiros e invertendo para ordem correta
     while (integerValue > 0):
         rests.append(integerValue%numeral)
         integerValue = integerValue//numeral
     rests.reverse()
-
     result = concatenateArrayIntsInString(rests)
 
-    if(type(value) == float):
+
+    # realizando operações de ponto flutuante
+    if("." in str(value)):
         restsFloat = []
 
         while(floatValue > 0):
             floatValue *= numeral
             restsFloat.append(int(floatValue))
             floatValue = floatValue - int(floatValue)
-        
         result = result + "." + concatenateArrayIntsInString(restsFloat)
     
     return result
 
-def powNumbers(values, init, end, numeral, step):
+# função para realizar potencialização de números de um array e soma-los
+def powArrayNumbersAndSum(values, init, end, numeral, step):
     result = 0
+    position = 0
+
     for i in range(init, end, step):
-        if(values[i] >= "A" and values[i] <= "F"):
-            value = [j for j in correspondences if correspondences[j] == values[i]]
+        if(values[position] >= "A" and values[position] <= "F"):
+            value = [j for j in correspondences if correspondences[j] == values[position]]
             result += value[0] * pow(numeral, i)
         else:
-            result += int(values[i])*pow(numeral, i)
+            result += int(values[position])*pow(numeral, i)
+        position += 1
     return result
 
+# converter iniciais para a base decimal
 def convertToDecimal(value, numeral):
-    if(type(value) == float):
+    if("." in str(value)):
         separetaValues = str(value).split(".")
         intergerValues = reverseString(separetaValues[0])
         floatValues = separetaValues[1]
 
-        integers = powNumbers(intergerValues, 0, len(intergerValues), numeral, 1)
-        floats = powNumbers(floatValues, -1, -(len(floatValues) + 1), numeral, -1)
+        integers = powArrayNumbersAndSum(intergerValues, 0, len(intergerValues), numeral, 1)
+        floats = powArrayNumbersAndSum(floatValues, -1, -(len(floatValues) + 1), numeral, -1)
 
         result = integers + floats
     else:
         intergerValues = reverseString(str(value))
-        result = powNumbers(intergerValues, 0, len(intergerValues), numeral, 1)
+        result = powArrayNumbersAndSum(intergerValues, 0, len(intergerValues), numeral, 1)
     
     return result
 
