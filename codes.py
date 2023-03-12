@@ -1,4 +1,4 @@
-correspondencias = {
+correspondences = {
     10: "A",
     11: "B",
     12: "C",
@@ -14,19 +14,19 @@ def concatenateArrayIntsInString(values):
     result = ""
     for i in range(len(values)):
         if(values[i] > 9):
-            result += correspondencias[values[i]]
+            result += correspondences[values[i]]
         else:
             result += str(values[i])
     return result
 
-def divideMethod(value, numeral):
+def convertFromDecimal(value, numeral):
     # array de resultado das operações
     rests = []
-    if (value < 1):
+    if (int(value) < 1):
         rests.append(0)
 
     integerValue = int(value)
-    floatValue = value - int(value)
+    floatValue = int(value) - int(value)
 
     # realizando operações e invertendo para ordem correta
     while (integerValue > 0):
@@ -52,13 +52,13 @@ def powNumbers(values, init, end, numeral, step):
     result = 0
     for i in range(init, end, step):
         if(values[i] >= "A" and values[i] <= "F"):
-            value = [j for j in correspondencias if correspondencias[j] == values[i]]
+            value = [j for j in correspondences if correspondences[j] == values[i]]
             result += value[0] * pow(numeral, i)
         else:
             result += int(values[i])*pow(numeral, i)
     return result
 
-def powMethod(value, numeral):
+def convertToDecimal(value, numeral):
     if(type(value) == float):
         separetaValues = str(value).split(".")
         intergerValues = reverseString(separetaValues[0])
@@ -74,17 +74,21 @@ def powMethod(value, numeral):
     
     return result
 
-baseInicial = int(input("Digite a base inicial que será convertida: "))
-baseFinal = int(input("Digite a base final para conversão: "))
-number = input("\nDigite o número que deseja converter: ")
+def main():
+    baseInicial = int(input("Digite a base inicial que será convertida: "))
+    baseFinal = int(input("Digite a base final para conversão: "))
+    number = input("\nDigite o número que deseja converter: ")
 
-if(baseInicial != 10):
-    decimalValue = powMethod(number, baseInicial)
-    if(baseFinal == 10):
-        print("\nValor na base " + str(baseFinal) + ": " + str(decimalValue), sep="")
+    if(baseInicial != 10):
+        decimalValue = convertToDecimal(number, baseInicial)
+        if(baseFinal == 10):
+            print("\nValor na base " + str(baseFinal) + ": " + str(decimalValue), sep="")
+        else:
+            convertedValue = convertFromDecimal(decimalValue, baseFinal)
+            print("\nValor na base " + str(baseFinal) + ": " + convertedValue, sep="")
     else:
-        convertedValue = divideMethod(decimalValue, baseFinal)
+        convertedValue = convertFromDecimal(number, baseFinal)
         print("\nValor na base " + str(baseFinal) + ": " + convertedValue, sep="")
-else:
-    convertedValue = divideMethod(number, baseFinal)
-    print("\nValor na base " + str(baseFinal) + ": " + convertedValue, sep="")
+
+if(__name__ == "__main__"):
+    main()
