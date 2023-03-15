@@ -7,7 +7,7 @@ const correspondences = {
     15: "F"
 }
 
-function convertFromDecimal(value, numeral) {
+export default function convertFromDecimal(value, numeral) {
     const rests = []
 
     while (value > 0) {
@@ -31,7 +31,7 @@ function getKeyByValueOfCorrespondences(value) {
     }
 }
 
-function convertToDecimal(value, numeral) {
+export default function convertToDecimal(value, numeral) {
     valueParse = String(value).split("").reverse()
 
     result = valueParse.reduce((result, value, index) =>
