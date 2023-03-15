@@ -37,8 +37,6 @@ def iniciar():
                     "2 - Converter"))
     return ini
 
-
-
 def main():
 
     while iniciar() !=1:
@@ -60,6 +58,4 @@ def main():
 
 if(__name__== "__main__"):
     main()
-
-
 
