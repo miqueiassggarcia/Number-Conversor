@@ -14,6 +14,7 @@ def reverseString(string):
 # função para concatenar array de inteiros em uma string
 def concatenateArrayIntsInString(values):
     result = ""
+
     for i in range(len(values)):
         if(values[i] > 9):
             result += correspondences[values[i]]
@@ -36,23 +37,21 @@ def convertFromDecimal(value, numeral):
     return result
 
 # função para realizar potencialização de números de um array e soma-los
-def powArrayNumbersAndSum(values, init, end, numeral, step):
+def powArrayNumbersAndSum(values, numeral):
     result = 0
-    position = 0
 
-    for i in range(init, end, step):
-        if(values[position] >= "A" and values[position] <= "F"):
-            value = [j for j in correspondences if correspondences[j] == values[position]]
+    for i in range(len(values)):
+        if(values[i] >= "A" and values[i] <= "F"):
+            value = [j for j in correspondences if correspondences[j] == values[i]]
             result += value[0] * pow(numeral, i)
         else:
-            result += int(values[position])*pow(numeral, i)
-        position += 1
+            result += int(values[i])*pow(numeral, i)
     return result
 
-# converter iniciais para a base decimal
+# converter das demais bases para a base decimal
 def convertToDecimal(value, numeral):
-    intergerValues = reverseString(value)
-    result = powArrayNumbersAndSum(intergerValues, 0, len(intergerValues), numeral, 1)
+    intergerValues = reverseString(str(value))
+    result = powArrayNumbersAndSum(intergerValues, numeral)
 
     return result
 
