@@ -58,10 +58,6 @@ def main():
             decimal_qualquer(n1, baseDes)
 
 
-
-
-
-
 if(__name__== "__main__"):
     main()
 
