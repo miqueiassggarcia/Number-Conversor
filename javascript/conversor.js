@@ -1,4 +1,4 @@
-correspondences = {
+const correspondences = {
     10: "A",
     11: "B",
     12: "C",
@@ -23,19 +23,24 @@ function convertFromDecimal(value, numeral) {
     return rests.reverse().join("")
 }
 
-function convertToDecimal(value, numeral) {
-    value.split("").reverse()
+function getKeyByValueOfCorrespondences(value) {
+    for(const obj in correspondences) {
+        if(correspondences[obj] == value) {
+            return obj
+        }
+    }
+}
 
-    result = value.reduce((result, value, index) =>
-        {if(value > 9) {
-            correspondences.map()
+function convertToDecimal(value, numeral) {
+    valueParse = String(value).split("").reverse()
+
+    result = valueParse.reduce((result, value, index) =>
+        {if(value >= "A" && value <= "F") {
+            return result += getKeyByValueOfCorrespondences(value) * Math.pow(numeral, index)
         }else {
-            result + value * Math.pow(numeral, index)
+            return result += Number(value) * Math.pow(numeral, index)
         }}
     , 0)
 
     return result
 }
-
-console.log(convertFromDecimal(255, 16))
-console.log(convertFromDecimal("FF", 16))
