@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de bases</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div>
+        <form action="index.html" method="get" id="formulario">
+            <label for="baseInicial">Digite a base inicial:</label>
+            <select name="baseInicial" id="baseInicial">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+            </select>
+            <label for="baseFinal">Digite a base final:</label>
+            <select name="baseFinal" id="baseFinal">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+            </select>
+            <label for="numero">Digite o valor numérico: </label>
+            <input type="number" id="numero" name="numero" placeholder="Digite apenas valores da base">
+            <button type="submit">Calcular</button>
+        </form>
+    </div>
+
+    <script src="conversor.js">
+        var form = document.querySelector("form");
+        function submitForm(event){
+            event.preventDefault();
+        }
+
+        form.addEventListener('submit', submitForm);
+
+        let urlValues = window.location.search;
+        console.log(urlValues)
+        let valuesParsed = urlValues.split("&").map((element) => element.replace("?", ""))
+        
+        jsonValues = {}
+        valuesParsed.forEach(createJSONFromArray)
+
+        function createJSONFromArray(value) {
+            let splited = value.split("=")
+            jsonValues[splited[0]] = splited[1]
+        }
+
+        if(jsonValues.baseInicial != 10) {
+            console.log(convertToDecimal(jsonValues.baseInicial, jsonValues.numero))
+        }
+    </script>
+</body>
+</html>
