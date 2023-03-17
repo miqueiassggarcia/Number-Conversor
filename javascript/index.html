@@ -12,6 +12,7 @@
     
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="conversor.js"></script>
 </head>
 <body>
@@ -70,11 +71,14 @@
     <script type="text/javascript">    
         // var form = document.querySelector("form");
         // function submitForm(event){
-            // event.preventDefault();
-
-            
+        //     event.preventDefault();
         // }
         
+        $( "form" ).submit(function( event ) {
+            console.log( $( this ).serializeArray() );
+            event.preventDefault();
+        });
+
         // form.addEventListener('submit', submitForm);
 
         let urlValues = window.location.search;

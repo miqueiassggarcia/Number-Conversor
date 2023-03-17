@@ -32,7 +32,7 @@ function getKeyByValueOfCorrespondences(value) {
 }
 
 function convertToDecimal(value, numeral) {
-    let valueParse = String(value).split("").reverse()
+    let valueParse = String(value).toUpperCase().split("").reverse()
 
     let result = valueParse.reduce((result, value, index) =>
         {if(value >= "A" && value <= "F") {
