@@ -68,46 +68,32 @@
         </form>
     </div>
 
-    <script type="text/javascript">    
-        // var form = document.querySelector("form");
-        // function submitForm(event){
-        //     event.preventDefault();
-        // }
-        
+    <script type="text/javascript">
         $( "form" ).submit(function( event ) {
-            console.log( $( this ).serializeArray() );
+            let formData = $( this ).serializeArray();
             event.preventDefault();
-        });
 
-        // form.addEventListener('submit', submitForm);
-
-        let urlValues = window.location.search;
-        let valuesParsed = urlValues.split("&").map((element) => element.replace("?", ""))
-        
-        jsonValues = {}
-        valuesParsed.forEach(createJSONFromArray)
-        
-        function createJSONFromArray(value) {
-            let splited = value.split("=")
-            jsonValues[splited[0]] = splited[1]
-        }
-
-        let convertedNumber
-        if(jsonValues.baseInicial != 10) {
-            convertedNumber = convertToDecimal(jsonValues.numero, jsonValues.baseInicial)
-            if(jsonValues.baseFinal != 10) {
-                convertedNumber = convertFromDecimal(convertedNumber, jsonValues.baseFinal)
+            let convertedNumber
+            if(formData[0].value != 10) {
+                convertedNumber = convertToDecimal(formData[2].value, formData[0].value)
+                if(formData[1].value != 10) {
+                    convertedNumber = convertFromDecimal(convertedNumber, formData[1].value)
+                }
+            } else {
+                convertedNumber = convertFromDecimal(formData[2].value, formData[1].value)
             }
-        } else {
-            convertedNumber = convertFromDecimal(jsonValues.numero, jsonValues.baseFinal)
-        }
 
-        let resultado = document.createElement("h2")
-        let texto = document.createTextNode(`Resultado na base ${jsonValues.baseFinal}: ${convertedNumber}`)
-        resultado.appendChild(texto)
+            let resultado = document.createElement("h2")
+            let texto = document.createTextNode(`Resultado na base ${formData[1].value}: ${convertedNumber}`)
+            resultado.appendChild(texto)
 
-        let element = document.getElementById("form")
-        element.appendChild(resultado)
+            let element = document.getElementById("form")
+            let previousResult = document.querySelector("h2")
+            if(previousResult) {
+                element.removeChild(previousResult)
+            }
+            element.appendChild(resultado)
+        });
     </script>
 </body>
 </html>
