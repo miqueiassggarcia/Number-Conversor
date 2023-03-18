@@ -69,14 +69,6 @@ def main():
             n1 = qualquer_decimal(numero, baseIni)
             print(decimal_qualquer(n1,baseDes))
 
-
-        #
-        # print(decimal_qualquer(42,8))
-        # print(qualquer_decimal(15,8))
-
-
-
-
 if(__name__== "__main__"):
     main()
 
