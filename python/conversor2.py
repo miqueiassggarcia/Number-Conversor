@@ -1,4 +1,12 @@
 #só não funciona ainda para base hexadecimal
+dicionario = {
+    10: "A",
+    11: "B",
+    12: "C",
+    13: "D",
+    14: "E",
+    15: "F"
+}
 def decimal_qualquer(numero, base):
     dividendo = numero
     quociente = 1
@@ -11,12 +19,19 @@ def decimal_qualquer(numero, base):
             quociente = dividendo//base
             dividendo = quociente
         lista.reverse()
+        if base == 16:
+            for i in range(len(lista)):
+                if lista[i] == 1 and lista[i+1]>=1:
+                    print(lista[i],lista[i+1])
 
         lista = "".join(map(str, lista))
+
+
         return lista
+
     return
 
-def binario_decimal(numero):
+def qualquer_decimal(numero, baseIni):
     string_numero = str(numero)
     lista = []
     numero_convertido = 0
@@ -27,7 +42,7 @@ def binario_decimal(numero):
 
     lista.reverse()
     for i in range(len(lista)):
-        numero_convertido += lista[i]*(2**i)
+        numero_convertido += lista[i]*(baseIni**i)
 
     return numero_convertido
 
@@ -40,20 +55,25 @@ def iniciar():
 def main():
 
     while iniciar() !=1:
-        baseIni = int(input("Digite a base de inicio: "))
-        baseDes = int(input("Digite a base de destino: "))
-        numero = int(input("Digite o número que deseja converter: "))
+        # baseIni = int(input("Digite a base de inicio: "))
+        # baseDes = int(input("Digite a base de destino: "))
+        # numero = int(input("Digite o número que deseja converter: "))
+        #
+        # if baseIni == 2:
+        #     n1 = binario_decimal(numero)
+        #     if baseDes != 10:
+        #         print(f"O número {numero} em base {baseDes} é: ",decimal_qualquer(n1, baseDes))
+        #     else:
+        #         print(f"O número {numero} em base {baseDes} é: ",n1)
+        #
+        # else:
+        #     n1 = binario_decimal(numero)
+        #     print(decimal_qualquer(n1, baseDes))
 
-        if baseIni == 2:
-            n1 = binario_decimal(numero)
-            if baseDes != 10:
-                print(f"O número {numero} em base {baseDes} é: ",decimal_qualquer(n1, baseDes))
-            else:
-                print(f"O número {numero} em base {baseDes} é: ",n1)
+        print(decimal_qualquer(42,8))
+        print(qualquer_decimal(15,8))
 
-        else:
-            n1 = binario_decimal(numero)
-            decimal_qualquer(n1, baseDes)
+
 
 
 if(__name__== "__main__"):
