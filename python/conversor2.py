@@ -49,29 +49,30 @@ def qualquer_decimal(numero, baseIni):
 def iniciar():
     ini = int(input("Digite algo\n"
                     "1 - Parar\n"
-                    "2 - Converter"))
+                    "2 - Converter\n"
+                    "Opção: "))
     return ini
 
 def main():
 
     while iniciar() !=1:
-        # baseIni = int(input("Digite a base de inicio: "))
-        # baseDes = int(input("Digite a base de destino: "))
-        # numero = int(input("Digite o número que deseja converter: "))
-        #
-        # if baseIni == 2:
-        #     n1 = binario_decimal(numero)
-        #     if baseDes != 10:
-        #         print(f"O número {numero} em base {baseDes} é: ",decimal_qualquer(n1, baseDes))
-        #     else:
-        #         print(f"O número {numero} em base {baseDes} é: ",n1)
-        #
-        # else:
-        #     n1 = binario_decimal(numero)
-        #     print(decimal_qualquer(n1, baseDes))
+        baseIni = int(input("Digite a base de inicio: "))
+        baseDes = int(input("Digite a base de destino: "))
+        numero = int(input("Digite o número que deseja converter: "))
+        n1 = qualquer_decimal(numero, baseIni)
+        if baseIni < baseDes:
+            if baseDes != 10:
+                print(f"O número {numero} em base {baseDes} é: ",decimal_qualquer(n1, baseDes))
+            else:
+                print(f"O número {numero} em base {baseDes} é: ",n1)
+        else:
+            n1 = qualquer_decimal(numero, baseIni)
+            print(decimal_qualquer(n1,baseDes))
 
-        print(decimal_qualquer(42,8))
-        print(qualquer_decimal(15,8))
+
+        #
+        # print(decimal_qualquer(42,8))
+        # print(qualquer_decimal(15,8))
 
 
 
