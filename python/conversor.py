@@ -24,6 +24,7 @@ def concatenateArrayIntsInString(values):
 # conversor de decimal para demais bases
 def convertFromDecimal(value, numeral):
     rests = []
+    result = ""
     # separando valores inteiros e float
     if("." in str(value)):
         # adicionando 0 caso seja apenas números de ponto flutuante
@@ -33,6 +34,14 @@ def convertFromDecimal(value, numeral):
         integerValue = int(values[0])
         # arredondando de acordo com o tamanho parseado
         floatValue = round(int(values[1])*pow(10, -(len(values[1]))), (len(values[1])))
+
+        restsFloat = []
+
+        while(floatValue > 0):
+            floatValue *= numeral
+            restsFloat.append(int(floatValue))
+            floatValue = floatValue - int(floatValue)
+        result = concatenateArrayIntsInString(restsFloat)
     else:
         integerValue = int(value)
 
@@ -42,18 +51,11 @@ def convertFromDecimal(value, numeral):
         rests.append(integerValue%numeral)
         integerValue = integerValue//numeral
     rests.reverse()
-    result = concatenateArrayIntsInString(rests)
 
-
-    # realizando operações de ponto flutuante
     if("." in str(value)):
-        restsFloat = []
-
-        while(floatValue > 0):
-            floatValue *= numeral
-            restsFloat.append(int(floatValue))
-            floatValue = floatValue - int(floatValue)
-        result = result + "." + concatenateArrayIntsInString(restsFloat)
+        result = concatenateArrayIntsInString(rests) + "." + result
+    else:
+        result = concatenateArrayIntsInString(rests)
     
     return result
 

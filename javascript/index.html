@@ -16,11 +16,11 @@
     <script src="conversor.js"></script>
 </head>
 <body>
-    <div class="form" id="form">
-        <form action="index.html" method="get" id="formulario">
+    <div class="divForm" id="divForm">
+        <form action="index.html" method="get" id="form">
             <div class="select">
-                <label for="baseInicial">Selecione a base inicial:</label>
-                <select name="baseInicial" id="baseInicial">
+                <label for="inicialBase">Selecione a base inicial:</label>
+                <select name="inicialBase" id="inicialBase">
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
@@ -39,8 +39,8 @@
                 </select>
             </div>
             <div class="select">
-                <label for="baseFinal">Selecione a base final:</label>
-                <select name="baseFinal" id="baseFinal">
+                <label for="finalBase" style="margin-right: 0.7em;">Selecione a base final:</label>
+                <select name="finalBase" id="finalBase">
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
@@ -60,8 +60,8 @@
             </div>
             
             <div class="input">
-                <label for="numero">Digite o valor numérico: </label>
-                <input type="text" id="numero" name="numero" placeholder="Valores da base">
+                <label for="number">Digite o valor numérico: </label>
+                <input type="text" id="number" name="number" placeholder="Valores da base">
             </div>
 
             <button type="submit">Calcular</button>
@@ -70,29 +70,109 @@
 
     <script type="text/javascript">
         $( "form" ).submit(function( event ) {
-            let formData = $( this ).serializeArray();
+            let [inicialBase, finalBase, number] = $( this ).serializeArray();
             event.preventDefault();
 
-            let convertedNumber
-            if(formData[0].value != 10) {
-                convertedNumber = convertToDecimal(formData[2].value, formData[0].value)
-                if(formData[1].value != 10) {
-                    convertedNumber = convertFromDecimal(convertedNumber, formData[1].value)
+            if(String(number.value).includes(",")) {
+                number.value = Number(String(number.value).replace(",", "."))
+            }
+
+            function validateNumbers(value) {
+                stringValue = String(value)
+                for(i=0; i < 16; i++) {
+                    if(i <= 10) {
+                        if(stringValue.includes(`${i}`) && i >= inicialBase) {
+                            return false
+                        }
+                    } else {
+                        hexValue = getKeyByValueOfCorrespondences(i)
+                        if(stringValue.includes(hexValue) && i >= inicialBase) {
+                            return false
+                        }
+                    }
+                }
+                return true
+            }
+
+            let validate
+            if(String(number.value).includes(".")) {
+                const [intPart, floatPart] = String(number.value).split(".")
+                if(inicialBase.value <= 10) {
+                    validate = intPart.split("").forEach(value => {
+                        if(value >= "A" && value <= "F") {
+                            return false
+                        } else {
+                            return Number(value) < inicialBase.value
+                        }
+                    })
+                    validate = floatPart.split("").forEach(value => {
+                        if(value >= "A" && value <= "F") {
+                            return false
+                        } else {
+                            return Number(value) < inicialBase.value
+                        }
+                    })
+                } else {
+                    validate = intPart.split("").forEach(value => {
+                        if(value >= "A" && value <= "F") {
+                            return getKeyByValueOfCorrespondences(value) < inicialBase
+                        } else {
+                            return Number(value) < inicialBase.value
+                        }
+                    })
+                    validate = floatPart.split("").forEach(value => {
+                        if(value >= "A" && value <= "F") {
+                            return getKeyByValueOfCorrespondences(value) < inicialBase
+                        } else {
+                            return Number(value) < inicialBase.value
+                        }
+                    })
                 }
             } else {
-                convertedNumber = convertFromDecimal(formData[2].value, formData[1].value)
+                console.log(validateNumbers(number.value))
+                if(inicialBase.value <= 10) {
+                    validate = String(number.value).split("").forEach(value => {
+                        if(value >= "A" && value <= "F") {
+                            return false
+                        } else {
+                            return Number(value) < inicialBase.value
+                        }
+                    })
+                } else {
+                    validate = String(number.value).split("").forEach(value => {
+                        if(value >= "A" && value <= "F") {
+                            return getKeyByValueOfCorrespondences(value) < inicialBase
+                        } else {
+                            return Number(value) < inicialBase.value
+                        }
+                    })
+                }
             }
 
-            let resultado = document.createElement("h2")
-            let texto = document.createTextNode(`Resultado na base ${formData[1].value}: ${convertedNumber}`)
-            resultado.appendChild(texto)
+            if(validate) {
+                let convertedNumber
+                if(inicialBase.value != 10) {
+                    convertedNumber = convertToDecimal(number.value, inicialBase.value)
+                    if(finalBase.value != 10) {
+                        convertedNumber = convertFromDecimal(convertedNumber, finalBase.value)
+                    }
+                } else {
+                    convertedNumber = convertFromDecimal(number.value, finalBase.value)
+                }
 
-            let element = document.getElementById("form")
-            let previousResult = document.querySelector("h2")
-            if(previousResult) {
-                element.removeChild(previousResult)
+                let resultado = document.createElement("h2")
+                let texto = document.createTextNode(`Resultado na base ${finalBase.value}: ${convertedNumber}`)
+                resultado.appendChild(texto)
+
+                let element = document.getElementById("divForm")
+                let previousResult = document.querySelector("h2")
+                if(previousResult) {
+                    element.removeChild(previousResult)
+                }
+                element.appendChild(resultado)
+            } else {
+                alert("Número informado não pertence a base")
             }
-            element.appendChild(resultado)
         });
     </script>
 </body>
