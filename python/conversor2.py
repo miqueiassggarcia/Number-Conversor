@@ -15,17 +15,15 @@ def decimal_qualquer(numero, base):
     if not base == 1:
         while quociente >=1:
             resto = dividendo % base
-            lista.append(resto)
-            quociente = dividendo//base
-            dividendo = quociente
+            if base == 16:
+                if resto >=10 and resto <=16:
+                    lista.append(dicionario[resto])
+                else:
+                    lista.append(resto)
+                quociente = dividendo//base
+                dividendo = quociente
         lista.reverse()
-        if base == 16:
-            for i in range(len(lista)):
-                if lista[i] == 1 and lista[i+1]>=1:
-                    print(lista[i],lista[i+1])
-
         lista = "".join(map(str, lista))
-
 
         return lista
 
