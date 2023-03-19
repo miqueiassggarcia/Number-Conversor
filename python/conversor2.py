@@ -81,7 +81,7 @@ def main():
         else:
             if not baseIni == 16:
                 n1 = qualquer_decimal(int(numero), baseIni)
-                print(decimal_qualquer(n1,baseDes))
+                print(f"O número {numero} em base {baseDes} é: ", decimal_qualquer(n1,baseDes))
             else:
                 numero1 = ''
                 for i in range(len(numero)):
@@ -94,7 +94,7 @@ def main():
                     else:
                         print("Número não permitido!")
                         return
-                print(decimal_qualquer(int(numero1), baseDes))
+                print(f"O número {numero.upper()} em base {baseDes} é: ",decimal_qualquer(int(numero1), baseDes))
 
 
 if(__name__== "__main__"):
