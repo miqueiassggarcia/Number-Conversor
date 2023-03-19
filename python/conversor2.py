@@ -7,6 +7,14 @@ dicionario = {
     14: "E",
     15: "F"
 }
+dicionario2 = {
+    "A": 10,
+    "B": 11,
+    "C": 12,
+    "D": 13,
+    "E": 14,
+    "F": 15
+}
 def decimal_qualquer(numero, base):
     dividendo = numero
     quociente = 1
@@ -61,16 +69,29 @@ def main():
     while iniciar() !=1:
         baseIni = int(input("Digite a base de inicio: "))
         baseDes = int(input("Digite a base de destino: "))
-        numero = int(input("Digite o número que deseja converter: "))
-        n1 = qualquer_decimal(numero, baseIni)
+        numero = (input("Digite o número que deseja converter: "))
+        if not baseIni == 16:
+            n1 = qualquer_decimal(int(numero), baseIni)
+
         if baseIni < baseDes:
             if baseDes != 10:
                 print(f"O número {numero} em base {baseDes} é: ",decimal_qualquer(n1, baseDes))
             else:
                 print(f"O número {numero} em base {baseDes} é: ",n1)
         else:
-            n1 = qualquer_decimal(numero, baseIni)
-            print(decimal_qualquer(n1,baseDes))
+            if not baseIni == 16:
+                n1 = qualquer_decimal(int(numero), baseIni)
+                print(decimal_qualquer(n1,baseDes))
+            else:
+                numero1 = ''
+                for i in range(len(numero)):
+                    n2 = numero[i]
+                    if n2 in dicionario2:
+                        numero1 += str(dicionario2[n2])
+                print(decimal_qualquer(int(numero1), baseDes))
+
+
+
 
 if(__name__== "__main__"):
     main()
