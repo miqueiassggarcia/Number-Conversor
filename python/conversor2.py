@@ -85,10 +85,16 @@ def main():
             else:
                 numero1 = ''
                 for i in range(len(numero)):
-                    n2 = numero[i]
-                    if n2 in dicionario2:
-                        numero1 += str(dicionario2[n2])
+                    n2 = numero[i].upper()
+                    if n2 < "F":
+                        if n2 in dicionario2:
+                            numero1 += str(dicionario2[n2])
+                        else:
+                            numero1 += str(n2)
+                    else:
+                        return
                 print(decimal_qualquer(int(numero1), baseDes))
+
 
 if(__name__== "__main__"):
     main()
