@@ -92,6 +92,7 @@ def main():
                         else:
                             numero1 += str(n2)
                     else:
+                        print("Número não permitido!")
                         return
                 print(decimal_qualquer(int(numero1), baseDes))
 
