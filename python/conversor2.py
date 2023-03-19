@@ -90,9 +90,6 @@ def main():
                         numero1 += str(dicionario2[n2])
                 print(decimal_qualquer(int(numero1), baseDes))
 
-
-
-
 if(__name__== "__main__"):
     main()
 
