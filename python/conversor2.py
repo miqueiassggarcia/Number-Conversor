@@ -20,8 +20,13 @@ def decimal_qualquer(numero, base):
                     lista.append(dicionario[resto])
                 else:
                     lista.append(resto)
-                quociente = dividendo//base
+                    quociente = dividendo//base
+                    dividendo = quociente
+            else:
+                lista.append(resto)
+                quociente = dividendo // base
                 dividendo = quociente
+
         lista.reverse()
         lista = "".join(map(str, lista))
 
