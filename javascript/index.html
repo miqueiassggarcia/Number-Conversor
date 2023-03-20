@@ -77,102 +77,26 @@
                 number.value = Number(String(number.value).replace(",", "."))
             }
 
-            function validateNumbers(value) {
-                stringValue = String(value)
-                for(i=0; i < 16; i++) {
-                    if(i <= 10) {
-                        if(stringValue.includes(`${i}`) && i >= inicialBase) {
-                            return false
-                        }
-                    } else {
-                        hexValue = getKeyByValueOfCorrespondences(i)
-                        if(stringValue.includes(hexValue) && i >= inicialBase) {
-                            return false
-                        }
-                    }
-                }
-                return true
-            }
-
-            let validate
-            if(String(number.value).includes(".")) {
-                const [intPart, floatPart] = String(number.value).split(".")
-                if(inicialBase.value <= 10) {
-                    validate = intPart.split("").forEach(value => {
-                        if(value >= "A" && value <= "F") {
-                            return false
-                        } else {
-                            return Number(value) < inicialBase.value
-                        }
-                    })
-                    validate = floatPart.split("").forEach(value => {
-                        if(value >= "A" && value <= "F") {
-                            return false
-                        } else {
-                            return Number(value) < inicialBase.value
-                        }
-                    })
-                } else {
-                    validate = intPart.split("").forEach(value => {
-                        if(value >= "A" && value <= "F") {
-                            return getKeyByValueOfCorrespondences(value) < inicialBase
-                        } else {
-                            return Number(value) < inicialBase.value
-                        }
-                    })
-                    validate = floatPart.split("").forEach(value => {
-                        if(value >= "A" && value <= "F") {
-                            return getKeyByValueOfCorrespondences(value) < inicialBase
-                        } else {
-                            return Number(value) < inicialBase.value
-                        }
-                    })
+            let convertedNumber
+            if(inicialBase.value != 10) {
+                convertedNumber = convertToDecimal(number.value, inicialBase.value)
+                if(finalBase.value != 10) {
+                    convertedNumber = convertFromDecimal(convertedNumber, finalBase.value)
                 }
             } else {
-                console.log(validateNumbers(number.value))
-                if(inicialBase.value <= 10) {
-                    validate = String(number.value).split("").forEach(value => {
-                        if(value >= "A" && value <= "F") {
-                            return false
-                        } else {
-                            return Number(value) < inicialBase.value
-                        }
-                    })
-                } else {
-                    validate = String(number.value).split("").forEach(value => {
-                        if(value >= "A" && value <= "F") {
-                            return getKeyByValueOfCorrespondences(value) < inicialBase
-                        } else {
-                            return Number(value) < inicialBase.value
-                        }
-                    })
-                }
+                convertedNumber = convertFromDecimal(number.value, finalBase.value)
             }
 
-            if(validate) {
-                let convertedNumber
-                if(inicialBase.value != 10) {
-                    convertedNumber = convertToDecimal(number.value, inicialBase.value)
-                    if(finalBase.value != 10) {
-                        convertedNumber = convertFromDecimal(convertedNumber, finalBase.value)
-                    }
-                } else {
-                    convertedNumber = convertFromDecimal(number.value, finalBase.value)
-                }
+            let resultado = document.createElement("h2")
+            let texto = document.createTextNode(`Resultado na base ${finalBase.value}: ${convertedNumber}`)
+            resultado.appendChild(texto)
 
-                let resultado = document.createElement("h2")
-                let texto = document.createTextNode(`Resultado na base ${finalBase.value}: ${convertedNumber}`)
-                resultado.appendChild(texto)
-
-                let element = document.getElementById("divForm")
-                let previousResult = document.querySelector("h2")
-                if(previousResult) {
-                    element.removeChild(previousResult)
-                }
-                element.appendChild(resultado)
-            } else {
-                alert("Número informado não pertence a base")
+            let element = document.getElementById("divForm")
+            let previousResult = document.querySelector("h2")
+            if(previousResult) {
+                element.removeChild(previousResult)
             }
+            element.appendChild(resultado)
         });
     </script>
 </body>
