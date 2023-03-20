@@ -92,3 +92,16 @@ function convertToDecimal(value, inicialBase) {
 
     return result
 }
+
+function validateInputNumbers(numbers) {
+    return String(numbers).toUpperCase().split("").every(value => {
+        if(value >= "A" && value <= "F") {
+            intValue = getKeyByValueOfCorrespondences(value)
+            return intValue >= 0 && intValue < Number(inicialBase.value)
+        } else if(value >= 0 && value < Number(inicialBase.value)) {
+            return true
+        } else {
+            return false
+        }
+    })
+}

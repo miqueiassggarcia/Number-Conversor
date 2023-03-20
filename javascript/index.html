@@ -77,26 +77,43 @@
                 number.value = Number(String(number.value).replace(",", "."))
             }
 
-            let convertedNumber
-            if(inicialBase.value != 10) {
-                convertedNumber = convertToDecimal(number.value, inicialBase.value)
-                if(finalBase.value != 10) {
-                    convertedNumber = convertFromDecimal(convertedNumber, finalBase.value)
-                }
+            if(inicialBase.value <= 10) {
+                number.value = Number(number.value)
+            }
+
+            let validate
+            if(String(number.value).includes(".")) {
+                const [intPart, floatPart] = String(number.value).split(".")
+                validate = validateInputNumbers(intPart)
+                validate = validateInputNumbers(floatPart)
             } else {
-                convertedNumber = convertFromDecimal(number.value, finalBase.value)
+                validate = validateInputNumbers(number.value)
             }
 
-            let resultado = document.createElement("h2")
-            let texto = document.createTextNode(`Resultado na base ${finalBase.value}: ${convertedNumber}`)
-            resultado.appendChild(texto)
+            if(validate) {
+                let convertedNumber
+                if(inicialBase.value != 10) {
+                    convertedNumber = convertToDecimal(number.value, inicialBase.value)
+                    if(finalBase.value != 10) {
+                        convertedNumber = convertFromDecimal(convertedNumber, finalBase.value)
+                    }
+                } else {
+                    convertedNumber = convertFromDecimal(number.value, finalBase.value)
+                }
 
-            let element = document.getElementById("divForm")
-            let previousResult = document.querySelector("h2")
-            if(previousResult) {
-                element.removeChild(previousResult)
+                let resultado = document.createElement("h2")
+                let texto = document.createTextNode(`Resultado na base ${finalBase.value}: ${convertedNumber}`)
+                resultado.appendChild(texto)
+
+                let element = document.getElementById("divForm")
+                let previousResult = document.querySelector("h2")
+                if(previousResult) {
+                    element.removeChild(previousResult)
+                }
+                element.appendChild(resultado)
+            } else {
+                alert("Número inserido não pertence a base inicial informada")
             }
-            element.appendChild(resultado)
         });
     </script>
 </body>
